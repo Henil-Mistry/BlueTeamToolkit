@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blue Team Investigation Toolkit</title>
+
+    <script>
+        (function () {
+            var savedTheme = localStorage.getItem("theme");
+            if (savedTheme === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="header-bar">
+
+            <span class="header-spacer" aria-hidden="true"></span>
+
+            <div class="header-content">
+                <h1>Blue Team Investigation Toolkit</h1>
+                <p class="subtitle">Log Analysis &amp; Investigation Dashboard</p>
+            </div>
+
+            <button id="themeToggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+                <span id="themeToggleIcon">🌙</span>
+            </button>
+
+        </div>
+
+    </header>
+
+    <section class="upload-section">
+
+        <h2>Upload Log Snapshot</h2>
+
+        <p class="uploadDescription">
+
+            Upload youraccess log to begin the investigation.
+
+        </p>
+
+        <div class="uploadControls">
+
+            <input
+                type="file"
+                id="logFile"
+                accept=".log"
+            >
+
+            <button id="uploadBtn">
+
+                Upload Log
+
+            </button>
+
+        </div>
+        <p id="lastUploaded">
+        No snapshot uploaded yet.
+        </p>
+    </section>
+
+    <section>
+
+        <h2>Saved Investigations</h2>
+
+        <select id="reportSelector">
+
+        <option value="">Loading investigations...</option>
+
+        </select>
+
+    </section>
+
+    <section>
+
+        <h2>Investigation Management</h2>
+
+        <div class="investigationActions">
+
+            <button id="deleteSnapshotBtn" class="btn-danger" disabled>
+
+                Delete Snapshot
+
+            </button>
+
+            <button id="deleteInvestigationBtn" class="btn-danger" disabled>
+
+                Delete Investigation
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <div id="emptyState" class="emptyState" style="display: none;">
+
+        <p>No investigation loaded.</p>
+
+        <p>Upload a log or select a saved investigation.</p>
+
+    </div>
+
+    <section>
+
+        <h2>Summary</h2>
+
+        <div id="summaryCards"></div>
+
+    </section>
+
+    <section>
+
+        <h2>Investigation Highlights</h2>
+
+        <div id="highlights"></div>
+
+    </section>
+
+    <section>
+
+        <h2>Status Codes</h2>
+
+        <table id="statusTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Status</th>
+                    <th>Count</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+    </section>
+
+    <section>
+
+        <h2>Top IP Addresses</h2>
+
+        <table id="ipTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>IP Address</th>
+                    <th>Requests</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+    </section>
+
+    <section>
+
+        <h2>Top Endpoints</h2>
+
+        <table id="endpointTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Endpoint</th>
+                    <th>Requests</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+    </section>
+
+    <section>
+
+        <h2>Quick Filters</h2>
+
+        <div id="filterBar"></div>
+
+    </section>
+
+    <section>
+
+        <h2>Search Logs</h2>
+
+        <input
+            type="text"
+            id="searchBox"
+            placeholder="Search by timestamp, IP, method, status, endpoint..."
+        >
+
+    </section>
+
+    <section>
+
+        <h2>Raw Log Explorer</h2>
+
+        <p id="logCounter">
+
+            Showing 0 of 0 requests
+
+        </p>
+
+        <div class="table-scroll">
+
+        <table id="logsTable">
+
+            <thead>
+
+                <tr>
+
+                    <th>Sr No.</th>
+                    <th>Timestamp</th>
+                    <th>IP</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Endpoint</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody></tbody>
+
+        </table>
+
+        </div>
+
+        
+        <div id="pagination">
+        <button id="prevPage" class="btn-secondary">◀ Previous</button>
+    <span id="pageInfo">Page 1 of 1</span>
+    <button id="nextPage" class="btn-secondary">Next ▶</button>
+    <br><br>
+    <label for="jumpRequest">Jump to Request:</label>
+    <input
+        type="number"
+        id="jumpRequest"
+        min="1"
+        placeholder="Request #"
+    >
+    <button id="jumpButton" class="btn-secondary">Go</button>
+</div>
+
+
+    </section>
+    <div id="toast"></div>
+
+    <div id="confirmOverlay" class="confirm-overlay">
+
+        <div class="confirm-modal" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle" aria-describedby="confirmMessage">
+
+            <h3 id="confirmTitle">Are you sure?</h3>
+
+            <p id="confirmMessage">This action cannot be undone.</p>
+
+            <div class="confirm-actions">
+
+                <button id="confirmCancelBtn" class="btn-secondary" type="button">Cancel</button>
+                <button id="confirmOkBtn" class="btn-danger" type="button">Confirm</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
