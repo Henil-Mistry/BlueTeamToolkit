@@ -400,6 +400,8 @@ logCounter.textContent =
 
             <td>${log.status}</td>
 
+            <td>${log.bytes}</td>
+
             <td>${log.endpoint}</td>
 
         </tr>
