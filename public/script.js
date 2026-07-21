@@ -313,10 +313,15 @@ function loadTopEndpoints(endpoints) {
 
         const row = document.createElement("tr");
 
-        row.innerHTML = `
-            <td class="clickable">${endpoint[0]}</td>
-            <td>${endpoint[1]}</td>
-        `;
+        const endpointCell = document.createElement("td");
+        endpointCell.className = "clickable";
+        endpointCell.textContent = endpoint[0];
+
+        const countCell = document.createElement("td");
+        countCell.textContent = endpoint[1];
+
+        row.appendChild(endpointCell);
+        row.appendChild(countCell);
 
         row.cells[0].style.cursor = "pointer";
 
@@ -387,25 +392,16 @@ logCounter.textContent =
 
     const srNo = start + index;
 
-    logsTable.innerHTML += `
-        <tr>
+    const row = document.createElement("tr");
 
-            <td>${srNo}</td>
+    [srNo, log.timestamp, log.ip, log.method, log.status, log.bytes, log.endpoint]
+        .forEach(value => {
+            const td = document.createElement("td");
+            td.textContent = value;
+            row.appendChild(td);
+        });
 
-            <td>${log.timestamp}</td>
-
-            <td>${log.ip}</td>
-
-            <td>${log.method}</td>
-
-            <td>${log.status}</td>
-
-            <td>${log.bytes}</td>
-
-            <td>${log.endpoint}</td>
-
-        </tr>
-    `;
+    logsTable.appendChild(row);
 
 });
 }
