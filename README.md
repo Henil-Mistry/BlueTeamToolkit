@@ -4,9 +4,11 @@ Blue Team Investigation Toolkit
 - Node.js
 
 ## Installation & initial set-up
-git clone <repo>
-cd BlueTeamToolkit
-npm install
+1.git clone <repo>
+
+2.cd BlueTeamToolkit
+
+3.npm install
 
 ## Run
 node server.js
